@@ -1,0 +1,5 @@
+# slagmd runtime dependencies.
+# tkinter is part of the standard library but ships separately on Debian and Ubuntu:
+#   sudo apt install python3-tk
+numpy>=1.24
+matplotlib>=3.7

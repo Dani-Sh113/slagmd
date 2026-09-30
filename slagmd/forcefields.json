@@ -1,0 +1,322 @@
+{
+  "_meta": {
+    "purpose": "Verified interatomic potential parameters for CaO-Al2O3-SiO2 melts.",
+    "provenance_rule": "Every number here was transcribed from a named printed table. Nothing is estimated, interpolated or recalled. A set with verified=false is REFUSED by forcefield.py when writing a LAMMPS deck.",
+    "units": {
+      "A": "kJ/mol as printed in the source table",
+      "sigma": "Angstrom",
+      "rho": "Angstrom",
+      "C": "Angstrom^6 kJ/mol",
+      "note": "inputgen.py converts A and C to kcal/mol for LAMMPS units real by dividing by 4.184."
+    },
+    "functional_forms": {
+      "bmh": "U = q_i q_j e^2 / (4 pi eps0 r) + A exp((sigma - r)/rho) - C/r^6   -> LAMMPS pair_style born/coul/long",
+      "buck": "U = q_i q_j e^2 / (4 pi eps0 r) + A exp(-r/rho) - C/r^6          -> LAMMPS pair_style buck/coul/long"
+    },
+    "transcribed_from": "H. Verbeeck, I. Bellemans et al., 'Molecular dynamics studies of the structural and transport properties of CaO-Al2O3-SiO2 melts: comparing the accuracy of the empirical force fields', Computational Materials Science 259 (2025) 114150. Tables 2, 3 and 4, and the effective-charge statements in section 2.1.",
+    "transcribed_on": "2026-09-29"
+  },
+  "matsui": {
+    "label": "Matsui (1994), BMH, fitted to 26 CMAS crystals",
+    "form": "bmh",
+    "verified": true,
+    "source": "Verbeeck 2025 Table 2; original M. Matsui, Mineral. Mag. 58A (1994) 571-572",
+    "charges": {
+      "Ca": 0.945,
+      "Al": 1.4175,
+      "Si": 1.89,
+      "O": -0.945
+    },
+    "charge_source": "Verbeeck 2025 section 2.1: 'The effective charges used are qCa = 0.945, qAl = 1.4175, qSi = 1.89, qO = -0.945.'",
+    "identity_check": {
+      "rule": "A_ij == 4.184 * rho_ij, because Matsui's own form has prefactor f0*(B_i+B_j) with f0 = 4.184 kJ/(mol Angstrom) and rho_ij = B_i + B_j",
+      "tolerance": 0.001,
+      "result_2026_09_29": "PASSES for all 10 pairs"
+    },
+    "pairs": {
+      "Al-Al": {
+        "A": 0.2845,
+        "sigma": 1.5704,
+        "rho": 0.068,
+        "C": 1355.71
+      },
+      "Al-Ca": {
+        "A": 0.3096,
+        "sigma": 1.9572,
+        "rho": 0.074,
+        "C": 1656.9
+      },
+      "Al-Si": {
+        "A": 0.2385,
+        "sigma": 1.5056,
+        "rho": 0.057,
+        "C": 1815.23
+      },
+      "Al-O": {
+        "A": 0.7196,
+        "sigma": 2.6067,
+        "rho": 0.172,
+        "C": 3336.26
+      },
+      "Ca-Ca": {
+        "A": 0.3347,
+        "sigma": 2.344,
+        "rho": 0.08,
+        "C": 2025.0
+      },
+      "Ca-Si": {
+        "A": 0.2636,
+        "sigma": 1.8924,
+        "rho": 0.063,
+        "C": 2218.5
+      },
+      "Ca-O": {
+        "A": 0.7448,
+        "sigma": 2.9935,
+        "rho": 0.178,
+        "C": 4077.45
+      },
+      "Si-Si": {
+        "A": 0.1925,
+        "sigma": 1.4408,
+        "rho": 0.046,
+        "C": 2430.49
+      },
+      "Si-O": {
+        "A": 0.6736,
+        "sigma": 2.5419,
+        "rho": 0.161,
+        "C": 4467.07
+      },
+      "O-O": {
+        "A": 1.1548,
+        "sigma": 3.643,
+        "rho": 0.276,
+        "C": 8210.17
+      }
+    }
+  },
+  "guillot": {
+    "label": "Guillot and Sator (2007), Buckingham, fitted to silicate melt density and structure",
+    "form": "buck",
+    "verified": true,
+    "source": "Verbeeck 2025 Table 3; original B. Guillot and N. Sator, Geochim. Cosmochim. Acta 71 (2007) 1249-1265",
+    "charges": {
+      "Ca": 0.945,
+      "Al": 1.4175,
+      "Si": 1.89,
+      "O": -0.945
+    },
+    "charge_source": "Verbeeck 2025 section 2.1, of Guillot's model: 'Effective charges are identical to those used in Matsui's model [22].'",
+    "cation_cation": "COULOMB ONLY. A_ij = C_ij = 0 for every cation-cation pair, stated explicitly in Verbeeck 2025 section 2.1.",
+    "identity_check": {
+      "rule": "For the three cation-oxygen pairs, A_Guillot == A_Matsui * exp(sigma_Matsui / rho), which is the algebraic consequence of rewriting BMH as Buckingham at fixed rho",
+      "tolerance_relative": 0.001,
+      "result_2026_09_29": "Al-O, Ca-O and Si-O PASS to better than 0.02 percent. O-O does NOT pass and is not meant to: Guillot's rho_O-O is 0.265 Angstrom against Matsui's 0.276, so the O-O pair is a genuine refit, not a transcription. Flagged rather than silently accepted."
+    },
+    "pairs": {
+      "Al-O": {
+        "A": 2753544.3,
+        "rho": 0.172,
+        "C": 3336.26
+      },
+      "Ca-O": {
+        "A": 15019679.1,
+        "rho": 0.178,
+        "C": 4077.45
+      },
+      "Si-O": {
+        "A": 4853815.5,
+        "rho": 0.161,
+        "C": 4467.07
+      },
+      "O-O": {
+        "A": 870570.0,
+        "rho": 0.265,
+        "C": 8210.17
+      }
+    }
+  },
+  "bouhadja": {
+    "label": "Bouhadja, Jakse and Pasturel (2013), BMH, fitted to AIMD of low-silica CaO-Al2O3-SiO2 melts",
+    "form": "bmh",
+    "verified": true,
+    "source": "Verbeeck 2025 Table 4; original M. Bouhadja, N. Jakse, A. Pasturel, J. Chem. Phys. 138 (2013)",
+    "charges": {
+      "Ca": 1.2,
+      "Al": 1.8,
+      "Si": 2.4,
+      "O": -1.2
+    },
+    "charge_source": "Verbeeck 2025 section 2.1: 'Bouhadja also adopted a different set of effective charges: qCa = 1.2, qAl = 1.8, qSi = 2.4, and qO = -1.2, which enhances the strength of long-range Coulombic interactions.'",
+    "why_this_one": "Verbeeck 2025 concludes Bouhadja reproduces transport in CaO-Al2O3-SiO2 better than Matsui or Guillot. Its cation-oxygen wells are deeper, about 66 percent for Ca-O and about 57 percent for Al-O and Si-O, which the paper attributes to the larger effective charges.",
+    "pairs": {
+      "Al-Al": {
+        "A": 0.2798,
+        "sigma": 1.5704,
+        "rho": 0.068,
+        "C": 1355.62
+      },
+      "Al-Ca": {
+        "A": 0.3088,
+        "sigma": 1.9572,
+        "rho": 0.074,
+        "C": 1656.78
+      },
+      "Al-Si": {
+        "A": 0.2412,
+        "sigma": 1.5056,
+        "rho": 0.057,
+        "C": 1815.07
+      },
+      "Al-O": {
+        "A": 0.7237,
+        "sigma": 2.6067,
+        "rho": 0.164,
+        "C": 3336.01
+      },
+      "Ca-Ca": {
+        "A": 0.3377,
+        "sigma": 2.344,
+        "rho": 0.08,
+        "C": 2024.84
+      },
+      "Ca-Si": {
+        "A": 0.2605,
+        "sigma": 1.8924,
+        "rho": 0.063,
+        "C": 2218.3
+      },
+      "Ca-O": {
+        "A": 0.7429,
+        "sigma": 2.9935,
+        "rho": 0.178,
+        "C": 4077.11
+      },
+      "Si-Si": {
+        "A": 0.1158,
+        "sigma": 1.4408,
+        "rho": 0.046,
+        "C": 2430.24
+      },
+      "Si-O": {
+        "A": 0.6754,
+        "sigma": 2.5419,
+        "rho": 0.156,
+        "C": 4466.67
+      },
+      "O-O": {
+        "A": 1.1578,
+        "sigma": 3.643,
+        "rho": 0.263,
+        "C": 8209.49
+      }
+    },
+    "released_pair_coeff_kcal": {
+      "_source": "Mendeley Data 10.17632/v7m3k6yksw.1, cooling.file and equilibration_step1 to 5, pair_coeff lines, order A rho sigma C",
+      "Al-Al": [
+        0.066874,
+        0.068,
+        1.5704,
+        323.996
+      ],
+      "Al-Ca": [
+        0.073792,
+        0.074,
+        1.9572,
+        395.96326
+      ],
+      "Al-Si": [
+        0.05765,
+        0.057,
+        1.5056,
+        433.7955
+      ],
+      "Al-O": [
+        0.17295,
+        0.164,
+        2.6067,
+        797.29258
+      ],
+      "Ca-Ca": [
+        0.08071,
+        0.08,
+        2.344,
+        483.92794
+      ],
+      "Ca-Si": [
+        0.062262,
+        0.063,
+        1.8924,
+        530.16554
+      ],
+      "Ca-O": [
+        0.177562,
+        0.178,
+        2.9935,
+        974.41414
+      ],
+      "Si-Si": [
+        0.027672,
+        0.046,
+        1.4408,
+        580.81914
+      ],
+      "Si-O": [
+        0.16142,
+        0.156,
+        2.5419,
+        1067.51658
+      ],
+      "O-O": [
+        0.27672,
+        0.263,
+        3.643,
+        1962.03704
+      ]
+    },
+    "identity_check": {
+      "rule": "Every A and C, divided by 4.184 to convert kJ/mol to kcal/mol, must equal the authors' own released pair_coeff line, and rho and sigma must match it exactly.",
+      "tolerance_relative": 0.001,
+      "result_2026_09_29": "PASSES for all 10 pairs, 40 numbers, worst relative difference about 2e-4 which is the printed rounding"
+    }
+  },
+  "_protocol_reference": {
+    "source": "Verbeeck 2025 section 2.3.1, quoted settings",
+    "software": "LAMMPS, 27 June 2024 version",
+    "integrator": "velocity-Verlet",
+    "timestep_fs": 2.0,
+    "ensemble": "NPT throughout, Nose-Hoover thermostat and barostat",
+    "pressure_atm": 1.0,
+    "cell": "cubic, periodic in all directions",
+    "n_atoms_classical": 5000,
+    "n_atoms_aimd": 150,
+    "coulomb": "Ewald summation, accuracy 1e-6, real-space cutoff 11 Angstrom, following Guillot and Sator",
+    "stages": [
+      {
+        "name": "initialization",
+        "detail": "random packing by Packmol, then energy minimisation to remove overlaps"
+      },
+      {
+        "name": "randomization",
+        "detail": "4000 K for 5 ns in NPT, to lose memory of the initial configuration"
+      },
+      {
+        "name": "cooling",
+        "detail": "linear ramp 4000 K to target T at 1 K/ps"
+      },
+      {
+        "name": "equilibration",
+        "detail": "50 ns at target T and 1 atm"
+      },
+      {
+        "name": "production",
+        "detail": "50 ns, sampling structure and transport"
+      }
+    ],
+    "sampling_interval_ps": 1.0,
+    "damping_note": "The paper says thermostat and barostat damping were changed between stages, low early for fast equilibration and higher later to reduce dynamic interference, with the schedule only in the Supplementary Materials. The values in protocol.json are therefore MY defaults following standard practice, NOT their numbers. They are labelled as such.",
+    "resources": "Flemish Supercomputer Center. Classical MD on 2 nodes, each 128 cores, 2 x 64-core AMD EPYC 7H12 at 2.6 GHz. Whole multi-stage classical workflow about 10 hours. AIMD on 6 nodes, about 39 hours for 20 ps.",
+    "aimd": "VASP, PAW, PBE, 400 eV plane-wave cutoff, Gamma point only, Gaussian smearing 0.05 eV, electronic convergence 1e-6 eV, 2 fs timestep, 20000 steps for 40 ps total, Nose thermostat, NVT"
+  }
+}

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "slagmd: build, run, watch and analyse molecular dynamics of molten oxide slags"
+message: "If you use this software, please cite it and, more importantly, cite the published work the physics comes from. See README.md."
+type: software
+authors:
+  - family-names: Ilyas
+    given-names: Danish
+    orcid: "https://orcid.org/0009-0009-6997-2370"
+repository-code: "https://github.com/Dani-Sh113/slagmd"
+license: MIT
+version: 1.0.0
+date-released: "2026-09-30"
+keywords:
+  - molecular dynamics
+  - LAMMPS
+  - molten oxide slag
+  - pyrometallurgy
+  - silicate melt
+  - workflow automation
